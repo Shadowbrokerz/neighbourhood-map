@@ -1,0 +1,50 @@
+/* Important is being used to overwrite
+   Semantic UI default value */
+body, .pusher {
+    background: #333333 !important;
+}
+
+h2 {
+    color: white;
+    padding: 10px;
+}
+
+.sidebar {
+    color: white;
+}
+
+.sidebar li {
+    list-style: none;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    top: 0;
+    padding: 4px 0px 0px 10px;
+}
+
+.input {
+    margin: 10px 0px 0px 30px;
+}
+
+.list-address {
+    border: 1px solid;
+    padding: 15px;
+}
+
+.address-list {
+    padding: 0;
+}
+
+.list-address:hover{
+    color:black;
+    background: white;
+}
+
+#map {
+    width: 80%;
+    height: 800px;
+    margin-top: 28px;
+    margin-right:auto;
+    margin-left:auto;
+}

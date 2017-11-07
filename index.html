@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neighbourhood Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.2.js"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="ui center aligned grid">
+        <h2>The Neighbourhood of Rose Hill</h2>
+    </div>
+    <i class="inverted big sidebar icon sidebar-toggle"></i>
+    <div class="ui sidebar inverted vertical menu">
+        <div class="ui large input">
+        <input type="text"  data-bind="value: currentFilter, valueUpdate: 'afterkeydown'" >
+        </div>
+        <i class="ui icon filter"></i>
+        <ul data-bind="foreach: filteredAddresses" class="address-list">
+            <li data-bind="text: name, event: { mouseover: highlightMarker , mouseleave: normalizeMarker }" class="list-address"></li>
+        </ul>
+    </div>
+    <div id="map"></div>
+</div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2w_kTlp3yBsz_zc2Q72DxoD42Bm8b4vM&callback=initMap">
+</script>
+</body>
+</html>
