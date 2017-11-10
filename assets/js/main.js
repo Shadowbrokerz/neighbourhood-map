@@ -1,34 +1,29 @@
 addresses = [
     {
-        id: 0,
         name: 'The Oval',
         address: 'The Oval, Oxford OX4 4SF',
         type: 'Iconic Roundabout',
         imgHeading: '0'
     },
     {
-        id: 1,
         name: 'Rose Hill Community Centre',
         address: 'Carole’s Way, Rose Hill, Oxford OX4 4HF',
         type: 'Gym',
         imgHeading: '0'
     },
     {
-        id: 2,
-        name: 'Corner Shops',
+        name: 'Rose Hill News Agent',
         address: '23 The Oval, Oxford OX4 4SE, UK',
         type: 'Shop',
         imgHeading: '210'
     },
     {
-        id: 3,
         name: 'The Prince of Wales',
         address: '73 Church Way, Oxford OX4 4EF',
         type: 'Pub',
         imgHeading: '110'
     },
     {
-        id: 4,
         name: 'The Isis Farmhouse',
         address: 'Haystacks Corner, The Towing Path, Iffley Lock, Oxford OX4 4EL',
         type: 'Pub',
@@ -36,7 +31,7 @@ addresses = [
     }
 ];
 
-    $(document).ready(function () {
+$(document).ready(function () {
     //Array that store all the markers
     markers = [];
     //Sidebar
@@ -57,32 +52,35 @@ addresses = [
         self.filteredAddresses = ko.computed(function () {
             var filter = self.currentFilter().toLowerCase();
             if (!filter) {
-                filterMarker(null); // display all the markers when there's no filter.
+                filterMarker(null); // display all the markers when there's no filter.)
+                resetMarkers();
                 return self.addresses;
             } else {
-                return ko.utils.arrayFilter(self.addresses, function (address) {
+                return ko.utils.arrayFilter(self.addresses, function (address, index) {
                     if (address.name.toLowerCase().includes(filter)) {
+                        highlightMarker(index);
                         filterMarker(filter); // Display only the marker with matching addresses.
                     }
                     return address.name.toLowerCase().includes(filter); // Display filtered address on the list.
+
                 });
             }
         }, self);
 
-        highlightMarker = function (marker) {
+        highlightMarker = function (index) {
             var image = {
                 url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                 size: new google.maps.Size(32, 32),
             };
-            markers[marker.id].marker.setOptions({
+            markers[index].marker.setOptions({
                 icon: image,
                 animation: google.maps.Animation.BOUNCE,
             });
 
         }
 
-        normalizeMarker = function (marker) {
-            markers[marker.id].marker.setOptions({
+        normalizeMarker = function (index) {
+            markers[index].marker.setOptions({
                 icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                 animation: null
             });
@@ -175,5 +173,14 @@ function filterMarker(filter) {
                 marker.marker.setVisible(false);
             }
         }
+    }
+}
+
+/**
+ * Resets the markers if there's no filter.
+ */
+resetMarkers = function () {
+    for (marker in markers) {
+        normalizeMarker(marker);
     }
 }
