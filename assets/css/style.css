@@ -36,6 +36,10 @@ h2 {
     padding: 0;
 }
 
+.ui.inverted.menu {
+    background: rgba(27, 28, 29, 0.29) !important;
+}
+
 .list-address:hover{
     color:black;
     background: white;
