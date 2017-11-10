@@ -18,11 +18,11 @@
     <i class="inverted big sidebar icon sidebar-toggle"></i>
     <div class="ui sidebar inverted vertical menu">
         <div class="ui large input">
-        <input type="text"  data-bind="value: currentFilter, valueUpdate: 'afterkeydown'" >
+        <input type="text" placeholder="Filter"  data-bind="value: currentFilter, valueUpdate: 'afterkeydown'" >
         </div>
         <i class="ui icon filter"></i>
         <ul data-bind="foreach: filteredAddresses" class="address-list">
-            <li data-bind="text: name, event: { mouseover: highlightMarker , mouseleave: normalizeMarker }" class="list-address"></li>
+            <li data-bind="text: name, attr: {id: $index}, event: { mouseover: function() {highlightMarker($index())}, mouseleave: function() { normalizeMarker($index())} }" class="list-address"></li>
         </ul>
     </div>
     <div id="map"></div>
