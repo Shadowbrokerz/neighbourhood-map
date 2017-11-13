@@ -119,7 +119,8 @@ $(document).ready(function () {
                                         <br><br>                                        <br><br>
                                         <span class="attribution">Provided by: <b>Foursquare</b></span>
 `);
-                    }).catch(error => alert(`There seems to be an error getting the venue details: ${error}`));
+                    })
+                    .catch(error => alert(`There seems to be an error getting the venue details: ${error}`));
             } else {
                 self.details(`<span class="no-info">No Information for this location</span>`);
             }
@@ -155,9 +156,12 @@ function initMap() {
  */
 function getLatLng(location, map) {
     place = location.address.replace(/ /g, '+');
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyD2w_kTlp3yBsz_zc2Q72DxoD42Bm8b4vM`).then(response => response.json()).then(function (data) {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyD2w_kTlp3yBsz_zc2Q72DxoD42Bm8b4vM`)
+        .then(response => response.json())
+        .then(function (data) {
             buildMarker(data, location, map);
-    }).catch(e => alert(`Whoops, there seems to be an error getting the lat/long: ${e}`));
+        })
+        .catch(e => alert(`Whoops, there seems to be an error getting the lat/long: ${e}`));
 }
 
 /**
@@ -219,7 +223,7 @@ function buildMarker(data, location, map) {
  */
 function filterMarker(filter) {
     if (filter === null) {
-        for ( let marker of markers) {
+        for (let marker of markers) {
             marker.marker.setVisible(true);
         }
     } else {
