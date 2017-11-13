@@ -119,8 +119,7 @@ $(document).ready(function () {
                                         <br><br>                                        <br><br>
                                         <span class="attribution">Provided by: <b>Foursquare</b></span>
 `);
-                    })
-                    .catch(error => alert(`There seems to be an error getting the venue details: ${error}`));
+                    }).catch(error => alert(`There seems to be an error getting the venue details: ${error}`));
             } else {
                 self.details(`<span class="no-info">No Information for this location</span>`);
             }
@@ -138,7 +137,6 @@ function initMap() {
     var roseHill = {lat: 51.728129, lng: -1.231592};
     //makes the map accessible globally for other functions.
     map = new google.maps.Map(document.getElementById('map'), {
-        draggable: false, //Keep the map focused on the neighbourhood.
         zoom: 16,
         center: roseHill
     });
@@ -160,8 +158,7 @@ function getLatLng(location, map) {
         .then(response => response.json())
         .then(function (data) {
             buildMarker(data, location, map);
-        })
-        .catch(e => alert(`Whoops, there seems to be an error getting the lat/long: ${e}`));
+    }).catch(e => alert(`Whoops, there seems to be an error getting the lat/long: ${e}`));
 }
 
 /**
@@ -223,7 +220,7 @@ function buildMarker(data, location, map) {
  */
 function filterMarker(filter) {
     if (filter === null) {
-        for (let marker of markers) {
+        for ( let marker of markers) {
             marker.marker.setVisible(true);
         }
     } else {
