@@ -71,7 +71,7 @@ $(document).ready(function () {
          */
         highlightMarker = function (index) {
             var image = {
-                url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
                 size: new google.maps.Size(32, 32),
             };
             markers[index].marker.setOptions({
@@ -86,7 +86,7 @@ $(document).ready(function () {
          */
         normalizeMarker = function (index) {
             markers[index].marker.setOptions({
-                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
                 animation: null
             });
         };
@@ -170,7 +170,7 @@ function getLatLng(location, map) {
  */
 function buildMarker(data, location, map) {
     var image = {
-        url: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
         size: new google.maps.Size(32, 32),
     };
     var marker = new google.maps.Marker({
