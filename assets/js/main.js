@@ -160,7 +160,7 @@ function getLatLng(location, map) {
         .then(response => response.json())
         .then(function (data) {
             buildMarker(data, location, map);
-    }).catch(e => alert(`Whoops, there seems to be an error getting the lat/long: ${e}`));
+        }).catch(e => alert(`Whoops, there seems to be an error getting the lat/long: ${e}`));
 }
 
 /**
@@ -222,7 +222,7 @@ function buildMarker(data, location, map) {
  */
 function filterMarker(filter) {
     if (filter === null) {
-        for ( let marker of markers) {
+        for (let marker of markers) {
             marker.marker.setVisible(true);
         }
     } else {
