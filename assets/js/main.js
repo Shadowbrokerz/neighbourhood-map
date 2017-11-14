@@ -143,7 +143,9 @@ function initMap() {
 
     //Build markers
     for (let i = 0; i < addresses.length; i++) {
-        getLatLng(addresses[i], map);
+        setTimeout(() => { // Adds a bit of delay for a nicer drop effect.
+            getLatLng(addresses[i], map);
+        }, i * 100);
     }
 }
 
