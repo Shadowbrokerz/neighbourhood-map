@@ -11,6 +11,7 @@ h2 {
 
 .sidebar {
     color: white;
+    z-index: 8;
 }
 
 .sidebar-menu {
