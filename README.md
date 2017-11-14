@@ -3,9 +3,13 @@ This small application will show you 5 locations of the neighbourhood of Rose Hi
 
 ## How to run this app
 Locally by downloading this repo:
-```
-git clone https://github.com/Shadowbrokerz/neighbourhood-map.git
-```
+* First of all download the repo by copying the link below and paste it in your desired location in the terminal.
+
+    ```
+    git clone https://github.com/Shadowbrokerz/neighbourhood-map.git
+    ```
+* Then, simply open the index.html and you should be able to see the map!
+
 Hosted online website:
 
 [https://shadowbrokerz.github.io/neighbourhood-map/](https://shadowbrokerz.github.io/neighbourhood-map)

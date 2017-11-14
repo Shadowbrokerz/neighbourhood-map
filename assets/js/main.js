@@ -1,23 +1,5 @@
 addresses = [
     {
-        name: 'The Oval',
-        address: 'The Oval, Oxford OX4 4SF',
-        type: 'Iconic Roundabout',
-        imgHeading: '0',
-    },
-    {
-        name: 'Rose Hill Community Centre',
-        address: 'Carole’s Way, Rose Hill, Oxford OX4 4HF',
-        type: 'Gym',
-        imgHeading: '0'
-    },
-    {
-        name: 'Rose Hill News Agent',
-        address: '23 The Oval, Oxford OX4 4SE, UK',
-        type: 'Shop',
-        imgHeading: '210'
-    },
-    {
         name: 'The Prince of Wales',
         address: '73 Church Way, Oxford OX4 4EF',
         type: 'Pub',
@@ -30,7 +12,30 @@ addresses = [
         type: 'Pub',
         imgHeading: '0',
         foursquareId: '4bc9f561cc8cd13aa58bbccf'
-    }
+    },
+    {
+        name: 'Sainsbury\'s',
+        address: 'Heyford Hill Roundabout, Oxford OX4 4XR',
+        type: 'Supermarket',
+        imgHeading: '200',
+        foursquareId: '4b52ff06f964a5202d8c27e3'
+    },
+    {
+        name: 'Papa John’s',
+        address: '80 Rosehill, Oxford, OX4 4HS',
+        type: 'Pizza Place',
+        imgHeading: '260',
+        foursquareId: '4b8a9cf8f964a520447532e3'
+    },
+    {
+        name: 'The Co-operative Food',
+        address: '74 Rose Hill, Oxford, OX4 4HS',
+        type: 'Grocery Store',
+        imgHeading: '260',
+        foursquareId: '4bae7ebdf964a52050b93be3'
+    },
+
+
 ];
 
 $(document).ready(function () {
@@ -38,7 +43,7 @@ $(document).ready(function () {
     markers = [];
 
     // Overall viewmodel for this screen, along with initial state
-    function addressListViewModel() {
+    function AddressListViewModel() {
         // Store the addresses in the model for reference
         self = this;
         self.addresses = addresses;
@@ -58,6 +63,8 @@ $(document).ready(function () {
                     if (address.name.toLowerCase().includes(filter)) {
                         highlightMarker(index);
                         filterMarker(filter); // Display only the marker with matching addresses.
+                    } else {
+                        markers[index].marker.setVisible(false); // If there's no match hide markers.
                     }
                     return address.name.toLowerCase().includes(filter); // Display filtered address on the list.
 
@@ -106,6 +113,8 @@ $(document).ready(function () {
                 fetch(`https://api.foursquare.com/v2/venues/${location.foursquareId}?client_id=1BKMCGVM1HRJCOKKQYDFVQVTM5ZDXFKN0UIPG5BOLHAJ1YRC&client_secret=VEUNPBMEZRK1VSQXRRJOMAXCURUI2OL2HLB0TDFZJ3JLUMRA&v=20170801`)
                     .then(result => result.json())
                     .then(function (result) {
+                        let totalLikes = result.response.venue.likes.summary ? `<span>Total Likes: ${result.response.venue.likes.summary}</span>` : `<span>Total Likes: N/A</span>`;
+                        let rating = result.response.venue.rating ? `<span>Rating: <span style="color:#${result.response.venue.ratingColor}">${result.response.venue.rating}</span></span><span>/10</span>` : `<span>Rating: N/A</span>`;
                         self.details(`<h2>Venue Details:</h2>
                                         <span>Name: ${result.response.venue.name}</span>
                                         <br>
@@ -113,10 +122,10 @@ $(document).ready(function () {
                                         <br>
                                         <span>Category: ${result.response.venue.categories[0].name}</span>
                                         <br>
-                                        <span>Total Likes: ${result.response.venue.likes.summary}</span>
+                                        ${totalLikes}
                                         <br>
-                                        <span>Rating: <span style="color:#${result.response.venue.ratingColor}">${result.response.venue.rating}</span></span><span>/10</span>
-                                        <br><br>                                        <br><br>
+                                        ${rating}
+                                        <br><br>
                                         <span class="attribution">Provided by: <b>Foursquare</b></span>
 `);
                     }).catch(error => alert(`There seems to be an error getting the venue details: ${error}`));
@@ -127,7 +136,7 @@ $(document).ready(function () {
 
     }
 
-    ko.applyBindings(new addressListViewModel());
+    ko.applyBindings(new AddressListViewModel());
 });
 
 /**
@@ -137,14 +146,14 @@ function initMap() {
     var roseHill = {lat: 51.728129, lng: -1.231592};
     //makes the map accessible globally for other functions.
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
+        zoom: 15,
         center: roseHill
     });
 
     //Build markers
     for (let i = 0; i < addresses.length; i++) {
         setTimeout(() => { // Adds a bit of delay for a nicer drop effect.
-            getLatLng(addresses[i], map);
+            getLatLng(addresses[i], map, i);
         }, i * 100);
     }
 }
@@ -154,12 +163,12 @@ function initMap() {
  * @param location
  * @param map
  */
-function getLatLng(location, map) {
+function getLatLng(location, map, markerId) {
     place = location.address.replace(/ /g, '+');
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyD2w_kTlp3yBsz_zc2Q72DxoD42Bm8b4vM`)
         .then(response => response.json())
         .then(function (data) {
-            buildMarker(data, location, map);
+            buildMarker(data, location, map, markerId);
         }).catch(e => alert(`Whoops, there seems to be an error getting the lat/long: ${e}`));
 }
 
@@ -171,7 +180,7 @@ function getLatLng(location, map) {
  * @param location
  * @param map
  */
-function buildMarker(data, location, map) {
+function buildMarker(data, location, map, markerId) {
     var image = {
         url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
         size: new google.maps.Size(32, 32),
@@ -180,6 +189,7 @@ function buildMarker(data, location, map) {
         position: data.results[0].geometry.location,
         map: map,
         icon: image,
+        id: markerId,
         animation: google.maps.Animation.DROP
     });
 
@@ -206,6 +216,7 @@ function buildMarker(data, location, map) {
 
     marker.addListener('click', function () {
         infowindow.open(map, marker);
+        venueDetails(addresses[marker.id]);
         marker.setAnimation(google.maps.Animation.BOUNCE);
         // Makes it bounce just once.
         setTimeout(function () {
@@ -244,3 +255,10 @@ resetMarkers = function () {
         normalizeMarker(i);
     }
 };
+
+/**
+ * If there's an issue loading the GMaps API it will throw this error.
+ */
+function googleMapsError() {
+    alert('There seems to be a problem with the Google Maps API script, check for spelling errors and that you are using your key.');
+}

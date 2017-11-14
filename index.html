@@ -15,27 +15,27 @@
 <div class="ui sidebar inverted vertical menu sidebar-menu" data-bind="css : {'left uncover visible' : isOpen}">
     <i class="ui icon close big" data-bind="click: toggleSidebar"></i>
     <div class="ui large icon input filter-input">
-        <input type="text" placeholder="Filter"  data-bind="value: currentFilter, valueUpdate: 'afterkeydown'" >
+        <input type="text" placeholder="Filter" data-bind="value: currentFilter, valueUpdate: 'afterkeydown'">
         <i class="ui icon filter"></i>
     </div>
 
     <ul data-bind="foreach: filteredAddresses" class="address-list">
-        <li data-bind="text: name, attr: {id: $index}, event: { mouseover: function() {highlightMarker($index())}, mouseleave: function() { normalizeMarker($index())} }, click: venueDetails" class="list-address"></li>
+        <li data-bind="text: name, attr: {id: $index}, event: { click: function() {highlightMarker($index())}, mouseleave: function() { normalizeMarker($index())} }, click: venueDetails"
+            class="list-address"></li>
     </ul>
     <div class="details" data-bind="html: details"></div>
 </div>
 <div class="pusher">
-<div class="container">
-    <i class="inverted big sidebar icon"  data-bind="click: toggleSidebar"></i>
-    <div class="ui center aligned grid">
-        <h2>The Neighbourhood of Rose Hill</h2>
-    </div>
+    <div class="container">
+        <i class="inverted big sidebar icon" data-bind="click: toggleSidebar"></i>
+        <div class="ui center aligned grid">
+            <h2>The Neighbourhood of Rose Hill</h2>
+        </div>
 
-    <div id="map"></div>
+        <div id="map"></div>
+    </div>
 </div>
-</div>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2w_kTlp3yBsz_zc2Q72DxoD42Bm8b4vM&callback=initMap">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2w_kTlp3yBsz_zc2Q72DxoD42Bm8b4vM&callback=initMap" onerror="googleMapsError()">
 </script>
 </body>
 </html>
