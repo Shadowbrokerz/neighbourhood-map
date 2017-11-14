@@ -13,6 +13,17 @@ h2 {
     color: white;
 }
 
+.sidebar.icon {
+    position: fixed;
+    top: 4px;
+    z-index: 9;
+    background: #333;
+}
+
+.close {
+    float: right;
+}
+
 .sidebar li {
     list-style: none;
 }
